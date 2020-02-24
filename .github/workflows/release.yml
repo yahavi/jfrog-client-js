@@ -15,11 +15,12 @@ jobs:
                   registry-url: 'https://registry.npmjs.org'
             - name: Install
               run: npm i
-            - name: Set npm auth token
-              run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ${{ secrets.NPM_CONFIG_USERCONFIG }}
             - name: Publish
               run: |
                   npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
                   npm config set scope "@yahavi"
                   npm config list
                   npm publish --access public 
+              env:
+                  CI: true
+                  NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
