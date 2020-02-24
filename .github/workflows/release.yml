@@ -18,4 +18,8 @@ jobs:
             - name: Set npm auth token
               run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ${{ secrets.NPM_CONFIG_USERCONFIG }}
             - name: Publish
-              run: npm publish --access public
+              run: |
+                  npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+                  npm config set scope "@yahavi"
+                  npm config list
+                  npm publish --access public 
